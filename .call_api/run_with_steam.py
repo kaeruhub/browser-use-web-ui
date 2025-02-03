@@ -30,7 +30,7 @@ class BrowserUseAPIClient:
         max_steps: int = 100,
         use_vision: bool = True,
         max_actions_per_step: int = 10,
-        tool_call_in_content: bool = True,
+        tool_calling_method: str = "auto",
     ) -> Dict[str, Any]:
         """
         Gradio APIを使用してタスクを実行します。
@@ -68,7 +68,7 @@ class BrowserUseAPIClient:
                 max_steps,
                 use_vision,
                 max_actions_per_step,
-                tool_call_in_content,
+                tool_calling_method,
             ]
         }
         
@@ -88,6 +88,9 @@ def main():
     result = client.run_task(
         task="go to google.com and type 'OpenAI' click search and give me the first url",
         add_infos="Please search OpenAI on Google",
+        llm_provider="gemini",  # Geminiを使用
+        llm_model_name="gemini-2.0-flash-exp",  # モデル名を指定
+        headless=True,  # ヘッドレスモードで実行
     )
     
     print("結果:", json.dumps(result, indent=2, ensure_ascii=False))
